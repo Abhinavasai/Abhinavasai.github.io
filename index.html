@@ -91,7 +91,7 @@
                     <p class="text-gray-300 mb-6">
                         I specialize in backend development with Java Spring Boot and have a strong foundation in cloud-native technologies, DevOps practices, and Machine Learning. I am always eager to learn and apply new skills to create robust and innovative solutions.
                     </p>
-                    <a href="AbhinavaSaiTirunagari_Resume.docx" download class="bg-transparent border-2 border-cyan-500 text-cyan-500 hover:bg-cyan-500 hover:text-white font-semibold py-2 px-6 rounded-lg transition-colors">
+                    <a href="https://docs.google.com/document/d/1I5AeLXkOAJCRL--aRmNunIBi3yIhZMzo/edit?usp=sharing&ouid=107279962979487063515&rtpof=true&sd=true" download class="bg-transparent border-2 border-cyan-500 text-cyan-500 hover:bg-cyan-500 hover:text-white font-semibold py-2 px-6 rounded-lg transition-colors">
                         Download Resume
                     </a>
                 </div>
@@ -306,7 +306,7 @@
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold text-center mb-12">Contact Me</h2>
             <div class="max-w-2xl mx-auto">
-                <form action="#" method="POST" class="bg-gray-800 p-8 rounded-lg shadow-lg">
+                <form id="contact-form" class="bg-gray-800 p-8 rounded-lg shadow-lg">
                     <div class="mb-4">
                         <label for="name" class="block text-gray-300 mb-2">Name</label>
                         <input type="text" id="name" name="name" class="w-full bg-gray-700 text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
@@ -324,6 +324,7 @@
                             Send Message
                         </button>
                     </div>
+                    <div id="form-status" class="text-center mt-4"></div>
                 </form>
             </div>
         </div>
@@ -355,6 +356,41 @@
             } else {
                 header.classList.remove('bg-gray-900', 'shadow-lg');
             }
+        });
+
+        // Contact Form Handler
+        const contactForm = document.getElementById('contact-form');
+        const formStatus = document.getElementById('form-status');
+
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            if (!name || !email || !message) {
+                formStatus.textContent = 'Please fill out all fields.';
+                formStatus.style.color = '#f87171'; // red-400
+                return;
+            }
+
+            const subject = `New Portfolio Contact from ${name}`;
+            const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+            const mailtoLink = `mailto:abhinavatirunaga@ufl.edu?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            // Attempt to open the mail client
+            window.location.href = mailtoLink;
+
+            // Provide feedback to the user
+            formStatus.textContent = 'Thank you! Your email client should now be open to send the message.';
+            formStatus.style.color = '#34d399'; // green-400
+            
+            // Clear the form after a short delay
+            setTimeout(() => {
+                contactForm.reset();
+                formStatus.textContent = '';
+            }, 5000);
         });
     </script>
 </body>
